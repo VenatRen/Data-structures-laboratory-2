@@ -20,6 +20,6 @@
 
 Основные элементы кода прокомментированы
 
-# Результат работы
+# Результат программы
 
 ![image](https://github.com/VenatRen/Data-structures-laboratory-2/assets/44971036/0b529e41-03e3-4e90-94a3-d2edfb612e23)
