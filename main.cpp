@@ -17,7 +17,7 @@ float M1[size_m][size_m];
 float M2[size_m][size_m];
 
 float M3[size_m][size_m];
-
+// Функция для транспонирования матрицы
 void trans(float A[size_m][size_m])
 {
 
@@ -28,7 +28,7 @@ void trans(float A[size_m][size_m])
 #pragma loop(hint_parallel(8))
 
 #pragma loop(no_vector)
-
+// Цикл по матрице и замена местами элементов по диагонали
     for (i = 0; i < size_m; i++)
 
 #pragma loop(hint_parallel(8))
@@ -43,13 +43,13 @@ void trans(float A[size_m][size_m])
             A[j][i] = s;
         }
 }
-
+// Функция для генерации случайного значения с плавающей точкой между Min и Max
 float Random()
 {
 
     return Min + (rand() / (RAND_MAX / (Max - Min)));
 }
-
+// Функция для печати матрицы
 void print_m(float **A)
 
 {
@@ -74,7 +74,7 @@ void print_m(float **A)
 
     cout << endl;
 }
-
+// Функция для умножения двух матриц без транспонирования
 void pmultiply_p(float a1[size_m][size_m], float a2[size_m][size_m], float a3[size_m][size_m])
 
 {
@@ -95,17 +95,17 @@ void pmultiply_p(float a1[size_m][size_m], float a2[size_m][size_m], float a3[si
         }
     }
 }
-
+// Функция для умножения двух матриц с транспонированием
 void pmultiply_t(float a1[size_m][size_m], float a2[size_m][size_m], float a3[size_m][size_m])
 
 {
-
+    // Транспонировать вторую матрицу
     trans(a2);
 
 #pragma loop(hint_parallel(8))
 
 #pragma loop(no_vector)
-
+    // Перебор матрицы и умножанеие элементов
     for (int i = 0; i < size_m; i++)
 
     {
@@ -129,7 +129,7 @@ void pmultiply_t(float a1[size_m][size_m], float a2[size_m][size_m], float a3[si
         }
     }
 }
-
+// Функция для печати матрицы
 void printt(float A[size_m][size_m])
 
 {
@@ -148,15 +148,15 @@ void printt(float A[size_m][size_m])
 
     cout << endl;
 }
-
+// Основная функция
 int main()
 
 {
-
+    // Запуск генератора случайных чисел
     srand(time(0));
 
     setlocale(LC_ALL, "RUSSIAN");
-
+    // Инициализируем матрицы случайными значениями
     for (int i = 0; i < size_m; i++)
     {
 
@@ -182,19 +182,19 @@ int main()
     // pmultiply_p(M1, M2, M3);
 
     auto end = chrono::high_resolution_clock::now();
-
+    // Вычисление времени, затраченное на умножение матриц без транспонирования
     chrono::duration<float> long_time_1 = end - start;
 
     cout << "time prosto » " << long_time_1.count() << endl;
 
     // printt(M3);
-
+    // Умножение матрицы с помощью транспонирования
     start = chrono::high_resolution_clock::now();
 
     pmultiply_t(M1, M2, M3);
 
     end = chrono::high_resolution_clock::now();
-
+    // Вычисление времени, затраченное на умножение матриц с помощью транспонирования
     chrono::duration<float> long_time_2 = end - start;
 
     long_time_2 = end - start;
@@ -202,7 +202,7 @@ int main()
     cout << "time with trans » " << long_time_2.count() << endl;
 
     // printt(M3);
-
+    // Расчёт соотношения производительности двух методов
     float p1, p2;
 
     p1 = (2 * size_m) * (size_m / long_time_1.count()) * (size_m * 0.000001);
